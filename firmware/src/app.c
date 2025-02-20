@@ -74,7 +74,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     This structure should be initialized by the APP_Initialize function.
     
     Application strings and buffers are be defined outside this structure.
-*/
+ */
 
 APP_DATA appData;
 
@@ -85,7 +85,7 @@ APP_DATA appData;
 // *****************************************************************************
 
 /* TODO:  Add any necessary callback functions.
-*/
+ */
 
 // *****************************************************************************
 // *****************************************************************************
@@ -95,7 +95,7 @@ APP_DATA appData;
 
 
 /* TODO:  Add any necessary local functions.
-*/
+ */
 
 
 // *****************************************************************************
@@ -112,17 +112,15 @@ APP_DATA appData;
     See prototype in app.h.
  */
 
-void APP_Initialize ( void )
-{
+void APP_Initialize(void) {
     /* Place the App state machine in its initial state. */
     appData.state = APP_STATE_INIT;
 
-    
+
     /* TODO: Initialize your application's state machine and other
      * parameters.
      */
 }
-
 
 /******************************************************************************
   Function:
@@ -132,36 +130,58 @@ void APP_Initialize ( void )
     See prototype in app.h.
  */
 
-void APP_Tasks ( void )
-{
+
+
+char c;
+void APP_Tasks(void) {
 
     /* Check the application's current state. */
-    switch ( appData.state )
-    {
-        /* Application's initial state. */
+    switch (appData.state) {
+            /* Application's initial state. */
         case APP_STATE_INIT:
         {
             bool appInitialized = true;
-       
-        
-            if (appInitialized)
-            {
-            
+
+
+            if (appInitialized) {
+
                 appData.state = APP_STATE_SERVICE_TASKS;
             }
             break;
         }
 
-        case APP_STATE_SERVICE_TASKS:
-        {
-        
+        case APP_STATE_SERVICE_TASKS:{
+           
+       appData.state = APP_STATE_SERVICE_read;
+   
+            break;
+    
+    
+        }
+        case APP_STATE_SERVICE_read: {
+            PORTGbits.RG12 = 1;
+             if(!DRV_USART0_ReceiverBufferIsEmpty()){
+                 c = DRV_USART0_ReadByte();
+                 PORTGbits.RG13 = 1;
+                appData.state = APP_STATE_SERVICE_write;
+             }
             break;
         }
+        case APP_STATE_SERVICE_write: {
+            PORTGbits.RG14 = 1;
+          if(!DRV_USART0_TransmitBufferIsFull()){
+              PORTGbits.RG15 = 1;
+              c = c + 1;
+                DRV_USART0_WriteByte(c);
+                appData.state = APP_STATE_SERVICE_read;
+            }
+                break;
+        }
 
-        /* TODO: implement your application state machine.*/
-        
+            /* TODO: implement your application state machine.*/
 
-        /* The default state should never be executed. */
+
+            /* The default state should never be executed. */
         default:
         {
             /* TODO: Handle error in application's state machine. */
@@ -170,7 +190,8 @@ void APP_Tasks ( void )
     }
 }
 
- 
+
+
 
 /*******************************************************************************
  End of File
