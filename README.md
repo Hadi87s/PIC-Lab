@@ -54,6 +54,5 @@ To test the experiment:
 This experiment helps build a fundamental understanding of **UART-based communication** in embedded systems, which is crucial for interfacing microcontrollers with external devices.
 
 
-## Working Notes:
-**(UART Configuration Settings to match the TeraTerm's)**
+## Working Notes (UART Configuration):
 ![UART Configuration Settings](USART-Configuration.PNG)
