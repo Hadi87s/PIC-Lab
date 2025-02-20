@@ -1,15 +1,28 @@
-# PIC32 Lab  
+# Experiment 2: Input and Output (IO) - PIC32
 
-This repository contains my PIC32 lab experiments. Each experiment is stored in a separate branch, demonstrating various concepts and implementations related to PIC32 microcontroller programming.  
+## Overview
 
-## How to Access Experiments  
-1. Switch to the desired branch to view the corresponding experiment.  
-2. Each branch contains the source code and necessary documentation for the experiment.  
+This experiment focuses on **digital Input/Output (IO) operations** using the **PIC32 microcontroller**. You will configure **digital IO ports** to control output devices (LEDs) and read input signals (push buttons).
 
-## Requirements  
-- MPLAB X IDE  
-- XC32 Compiler  
-- PIC32 Development Board  
+## Objectives
 
-## License  
-This project is for educational purposes. Feel free to use and modify the code as needed.  
+- Understand **IO port configuration** on the PIC32.
+- Learn to control **LEDs** using digital outputs.
+- Read input from **push buttons** and process user interaction.
+- Implement simple **polling-based IO control**.
+
+## Equipment Required
+
+- **PIC32 Development Board**
+- **MPLAB X IDE**
+- **XC32 Compiler**
+- **PICkit 3 (or similar) Programmer**
+- **LEDs, Push Buttons, Resistors**
+
+## Theory
+
+- The **PIC32 IO ports** can be configured as **input** or **output** using the following registers:
+  - `TRISx`: Sets the pin direction (**1 = Input**, **0 = Output**).
+  - `LATx`: Writes output values to pins.
+  - `PORTx`: Reads input values from pins.
+
