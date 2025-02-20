@@ -90,7 +90,7 @@ typedef enum
 	APP_STATE_INIT=0,
 	APP_STATE_SERVICE_TASKS,
     APP_STATE_SERVICE_read,
-    APP_STATE_SERVICE_write,
+    APP_STATE_SERVICE_command,
 
 	/* TODO: Define states used by the application state machine. */
 

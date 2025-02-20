@@ -54,6 +54,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 #include "app.h"
+#include <string.h>
 
 // *****************************************************************************
 // *****************************************************************************
@@ -133,6 +134,8 @@ void APP_Initialize(void) {
 
 
 char c;
+char arr[4];
+int i = 0;
 void APP_Tasks(void) {
 
     /* Check the application's current state. */
@@ -159,22 +162,42 @@ void APP_Tasks(void) {
     
         }
         case APP_STATE_SERVICE_read: {
-            PORTGbits.RG12 = 1;
+            while(true){
              if(!DRV_USART0_ReceiverBufferIsEmpty()){
-                 c = DRV_USART0_ReadByte();
-                 PORTGbits.RG13 = 1;
-                appData.state = APP_STATE_SERVICE_write;
-             }
-            break;
-        }
-        case APP_STATE_SERVICE_write: {
-            PORTGbits.RG14 = 1;
-          if(!DRV_USART0_TransmitBufferIsFull()){
-              PORTGbits.RG15 = 1;
-              c = c + 1;
-                DRV_USART0_WriteByte(c);
-                appData.state = APP_STATE_SERVICE_read;
+                     c = DRV_USART0_ReadByte();
+                     if(c == '/') break;
+                    arr[i++] = c;
+                    
+                 }
             }
+                 i = 0;
+                 
+                appData.state = APP_STATE_SERVICE_command;
+            break;
+             }
+        
+        case APP_STATE_SERVICE_command: {
+            if(strcmp(arr, "LED1") == 0){
+                PORTG =0;
+                PORTGbits.RG12 = 1;
+            } else if(strcmp(arr, "LED2") == 0){
+                PORTG =0;
+                PORTGbits.RG13 = 1;
+            }else if(strcmp(arr, "LED3") == 0){
+                PORTG =0;
+                PORTGbits.RG14 = 1;
+            }else if(strcmp(arr, "LED4") == 0){
+                PORTG =0;
+                PORTGbits.RG15 = 1;
+            }else if(strcmp(arr, "ALLL") == 0){
+                PORTGbits.RG12 = 1;
+                PORTGbits.RG13 = 1;
+                PORTGbits.RG14 = 1;
+                PORTGbits.RG15 = 1;
+            }else if(strcmp(arr, "OFFF") == 0){
+                PORTG =0;
+            }
+             appData.state = APP_STATE_SERVICE_read;
                 break;
         }
 
