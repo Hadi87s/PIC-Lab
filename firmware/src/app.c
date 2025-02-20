@@ -157,9 +157,8 @@ void APP_Tasks ( void )
         case APP_STATE_SERVICE_TASKS:
         {
             if(PORTGbits.RG6 == 1){
-
-                 appData.state = APP_COUNT;
-           } 
+              appData.state = APP_COUNT;
+            } 
             if(PORTGbits.RG7 == 1){
                 appData.state = APP_FLASH;
             }
@@ -168,13 +167,10 @@ void APP_Tasks ( void )
         }
         case APP_COUNT:
         {
-                          
-                PORTG = count  << 12;
-                  count++; // counting up
+          PORTG = count  << 12;
+          count++; // counting up
 
-            
-
-            for(i = 0; i< 3000000;i++);
+          for(i = 0; i< 3000000;i++);
             
             if(PORTGbits.RG7 == 1){
                 appData.state = APP_FLASH;
@@ -188,14 +184,8 @@ void APP_Tasks ( void )
             if(PORTGbits.RG6 == 1){
                 appData.state = APP_COUNT;
             }
-            
             break;
         }
-
-        /* TODO: implement your application state machine.*/
-        
-
-        /* The default state should never be executed. */
         default:
         {
             /* TODO: Handle error in application's state machine. */
