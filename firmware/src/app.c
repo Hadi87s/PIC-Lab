@@ -190,10 +190,7 @@ void APP_Tasks(void) {
                 PORTG =0;
                 PORTGbits.RG15 = 1;
             }else if(strcmp(arr, "ALLL") == 0){
-                PORTGbits.RG12 = 1;
-                PORTGbits.RG13 = 1;
-                PORTGbits.RG14 = 1;
-                PORTGbits.RG15 = 1;
+             PORTG =0xffff;
             }else if(strcmp(arr, "OFFF") == 0){
                 PORTG =0;
             }
