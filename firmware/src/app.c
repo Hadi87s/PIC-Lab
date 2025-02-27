@@ -136,7 +136,7 @@ char c;
 char d;
 char teraterm[40];
 char mobile[40];
-int i,j,k = 0;
+int i = 0, j = 0, k = 0;
 int mode = 0;
 void APP_Tasks ( void )
 {
@@ -153,7 +153,7 @@ void APP_Tasks ( void )
             if (appInitialized)
             {
             
-                appData.state = APP_STATE_SERVICE_TASKS;
+                appData.state = READ;
             }
             break;
         }
@@ -165,65 +165,83 @@ void APP_Tasks ( void )
             break;
         }
         case READ: {
-            while(true){
-                mode = 0;
+            
+                
              if(!DRV_USART0_ReceiverBufferIsEmpty()){
                      c = DRV_USART0_ReadByte();
-                      mode = 1;
+                      if (c == '/') {
+                        mode = 1;
+                        appData.state = WRITE;
+                       
+                    }
                      teraterm[i++] = c;
-                     if(c == '/') break;
-                   
                 }
              if(!DRV_USART1_ReceiverBufferIsEmpty()){
                     c = DRV_USART1_ReadByte();
-                     mode = 2;
-                     mobile[j++] = c;
-                     if(c == '/') break;
+                     if (c == '/') {
+                        mode = 2;
+                        appData.state = WRITE;
+                    }
+                    mobile[j++] = c;
                 }
-            }
-                 i = 0;
-                 j=0;
-                 k=0;
-                 appData.state = WRITE;
+            
+                 //i = 0;
+                 //j=0;
+                 //k=0;
+             
                  break;
-        } case WRITE: {
+        } 
+        case WRITE: {
+            
             if(mode == 1){
-                d = teraterm[k++];
-                  if(d == '/'){
+               
+                for(k=0; k<=i;k++){
+                 if(!DRV_USART1_TransmitBufferIsFull()){
+                    //d = teraterm[k++];
+                    
+                    DRV_USART1_WriteByte(teraterm[k]);
+                 }
+                 }
+                 
                      appData.state =READ; 
                   }
-                appData.state = MOBILE_WRITE;
-            } else if(mode == 2) {
-                 d = mobile[k++];
-                  if(d == '/'){
-                     appData.state =READ; 
-                  }
-                appData.state = TERATERM_WRITE;
-            } else {
                 
-            }
-            break;
-        } case MOBILE_WRITE: {
-            DRV_USART1_WriteByte(d);
-            appData.state = WRITE;
-         break;   
-        } case TERATERM_WRITE: {
-             DRV_USART0_WriteByte(d);
-            appData.state = WRITE;
+            
+             if(mode == 2){
+               
+                for(k=0; k<=j;k++){
+                 if(!DRV_USART0_TransmitBufferIsFull()){
+                    //d = teraterm[k++];
+                    
+                    DRV_USART0_WriteByte(mobile[k]);
+                 }
+                 }
+                 
+                     appData.state =READ; 
+                  }
+            
+            
+            i=0;
+            j=0;
+            
+            
             break;
         }
+            default:{
+
+                   break;
+               }
+        } 
+        
+        
 
         /* TODO: implement your application state machine.*/
         
 
         /* The default state should never be executed. */
-        default:
-        {
-            /* TODO: Handle error in application's state machine. */
-            break;
-        }
+       
     }
-}
+
 
  
 

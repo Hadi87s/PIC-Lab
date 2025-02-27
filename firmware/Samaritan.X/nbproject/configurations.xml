@@ -161,9 +161,9 @@
         <targetDevice>PIC32MX795F512L</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>PICkit3PlatformTool</platformTool>
+        <platformTool>PK3OBPlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>1.42</languageToolchainVersion>
+        <languageToolchainVersion>1.44</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
