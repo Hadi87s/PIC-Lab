@@ -84,17 +84,13 @@ extern "C" {
     determine the behavior of the application at various times.
 */
 
-typedef enum
-{
-	/* Application's state machine's initial state. */
+typedef enum {
 	APP_STATE_INIT=0,
 	APP_STATE_SERVICE_TASKS,
     READ,
     WRITE,
-            MOBILE_WRITE,
-            TERATERM_WRITE,
-	/* TODO: Define states used by the application state machine. */
-
+    MOBILE_WRITE,
+    TERATERM_WRITE,
 } APP_STATES;
 
 
