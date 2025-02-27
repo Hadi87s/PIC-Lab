@@ -138,113 +138,65 @@ char teraterm[40];
 char mobile[40];
 int i = 0, j = 0, k = 0;
 int mode = 0;
+
 void APP_Tasks ( void )
 {
-
-    /* Check the application's current state. */
     switch ( appData.state )
     {
-        /* Application's initial state. */
-        case APP_STATE_INIT:
-        {
-            bool appInitialized = true;
-       
-        
-            if (appInitialized)
+        case APP_STATE_INIT:{
+          bool appInitialized = true;
+          if (appInitialized)
             {
-            
                 appData.state = READ;
             }
             break;
         }
-
-        case APP_STATE_SERVICE_TASKS:
-        {
-                appData.state = READ;
-        
-            break;
+        case APP_STATE_SERVICE_TASKS:{
+          appData.state = READ;
+          break;
         }
         case READ: {
-            
-                
-             if(!DRV_USART0_ReceiverBufferIsEmpty()){
-                     c = DRV_USART0_ReadByte();
-                      if (c == '/') {
-                        mode = 1;
-                        appData.state = WRITE;
-                       
-                    }
-                     teraterm[i++] = c;
-                }
-             if(!DRV_USART1_ReceiverBufferIsEmpty()){
+            if(!DRV_USART0_ReceiverBufferIsEmpty()){
+              c = DRV_USART0_ReadByte();
+              if (c == '/') {
+                  mode = 1;
+                  appData.state = WRITE;
+              }
+              teraterm[i++] = c;
+              }
+            if(!DRV_USART1_ReceiverBufferIsEmpty()){
                     c = DRV_USART1_ReadByte();
-                     if (c == '/') {
+                    if (c == '/') {
                         mode = 2;
                         appData.state = WRITE;
                     }
                     mobile[j++] = c;
                 }
-            
-                 //i = 0;
-                 //j=0;
-                 //k=0;
-             
-                 break;
-        } 
-        case WRITE: {
-            
+              break;
+        } case WRITE: {
             if(mode == 1){
-               
-                for(k=0; k<=i;k++){
-                 if(!DRV_USART1_TransmitBufferIsFull()){
+              for(k=0; k<=i;k++){
+                if(!DRV_USART1_TransmitBufferIsFull()){
                     //d = teraterm[k++];
-                    
                     DRV_USART1_WriteByte(teraterm[k]);
-                 }
-                 }
-                 
-                     appData.state =READ; 
-                  }
-                
-            
-             if(mode == 2){
-               
-                for(k=0; k<=j;k++){
-                 if(!DRV_USART0_TransmitBufferIsFull()){
+                }
+              }
+              appData.state =READ; 
+            }
+            if(mode == 2){
+              for(k=0; k<=j;k++){
+                if(!DRV_USART0_TransmitBufferIsFull()){
                     //d = teraterm[k++];
-                    
-                    DRV_USART0_WriteByte(mobile[k]);
-                 }
-                 }
-                 
-                     appData.state =READ; 
-                  }
-            
-            
+                  DRV_USART0_WriteByte(mobile[k]);
+                }
+              }
+            appData.state =READ; 
+            }
             i=0;
             j=0;
-            
-            
             break;
+        } default:{
+                break;
         }
-            default:{
-
-                   break;
-               }
-        } 
-        
-        
-
-        /* TODO: implement your application state machine.*/
-        
-
-        /* The default state should never be executed. */
-       
-    }
-
-
- 
-
-/*******************************************************************************
- End of File
- */
+  } 
+}
