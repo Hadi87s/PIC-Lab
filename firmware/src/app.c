@@ -154,9 +154,10 @@ void APP_Tasks ( void )
 
         case APP_STATE_SERVICE_TASKS:
         {
+            // First column
             PORTB = 0x079C;
             if(PORTBbits.RB10 == 0) {
-                PORTG = 0x1000;
+                PORTG = 0xA000 ;
             } else if (PORTBbits.RB9 == 0){
                 PORTG = 0x4000;
             }else if (PORTBbits.RB8 == 0 ){
@@ -164,8 +165,45 @@ void APP_Tasks ( void )
             }else if (PORTBbits.RB7==0){
                 PORTG = 0x0000;
             }
-            
             int i = 0;
+            for(i = 0; i< 2000000;i++);
+            // Second column
+            PORTB = 0x07CC;
+            if(PORTBbits.RB10 == 0) {
+                PORTG = 0x1000;
+            } else if (PORTBbits.RB9 == 0){
+                PORTG = 0x5000;
+            }else if (PORTBbits.RB8 == 0 ){
+                PORTG = 0x8000;
+            }else if (PORTBbits.RB7==0){
+                PORTG = 0xE000;
+            }
+           
+            for(i = 0; i< 2000000;i++);
+             // Third column
+            PORTB = 0x07D4;
+            if(PORTBbits.RB10 == 0) {
+                PORTG = 0x2000;
+            } else if (PORTBbits.RB9 == 0){
+                PORTG = 0x6000;
+            }else if (PORTBbits.RB8 == 0 ){
+                PORTG = 0x9000;
+            }else if (PORTBbits.RB7==0){
+                PORTG = 0xF000;
+            }
+            
+             for(i = 0; i< 2000000;i++);
+            // Fourth column
+            PORTB = 0x07D8;
+            if(PORTBbits.RB10 == 0) {
+                PORTG = 0x3000;
+            } else if (PORTBbits.RB9 == 0){
+                PORTG = 0xB000;
+            }else if (PORTBbits.RB8 == 0 ){
+                PORTG = 0xC000;
+            }else if (PORTBbits.RB7==0){
+                PORTG = 0xD000;
+            }
             for(i = 0; i< 2000000;i++);
             break;
         }
