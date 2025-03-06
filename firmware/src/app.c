@@ -154,7 +154,19 @@ void APP_Tasks ( void )
 
         case APP_STATE_SERVICE_TASKS:
         {
-        
+            PORTB = 0x079C;
+            if(PORTBbits.RB10 == 0) {
+                PORTG = 0x1000;
+            } else if (PORTBbits.RB9 == 0){
+                PORTG = 0x4000;
+            }else if (PORTBbits.RB8 == 0 ){
+                PORTG = 0x7000;
+            }else if (PORTBbits.RB7==0){
+                PORTG = 0x0000;
+            }
+            
+            int i = 0;
+            for(i = 0; i< 2000000;i++);
             break;
         }
 

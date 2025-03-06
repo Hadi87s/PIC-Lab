@@ -88,12 +88,16 @@ extern "C" {
 #define SYS_CLK_CONFIG_SECONDARY_XTAL       32768ul
    
 /*** Ports System Service Configuration ***/
-#define SYS_PORT_AD1PCFG        ~0xf823
+#define SYS_PORT_AD1PCFG        ~0x3
 #define SYS_PORT_CNPUE          0x0
 #define SYS_PORT_CNEN           0x0
 #define SYS_PORT_B_TRIS         0xFFA3
 #define SYS_PORT_B_LAT          0x0000
 #define SYS_PORT_B_ODC          0x0000
+
+#define SYS_PORT_G_TRIS         0x0FFF
+#define SYS_PORT_G_LAT          0x0000
+#define SYS_PORT_G_ODC          0x0000
 
 
 /*** Interrupt System Service Configuration ***/
