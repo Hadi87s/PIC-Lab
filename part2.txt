@@ -1,0 +1,12 @@
+void setup() {
+  // Start the serial communication with a baud rate of 9600
+  Serial.begin(9600);
+}
+
+void loop() {
+  // Print "Hello World" on the Serial Monitor
+  Serial.println("Hello World");
+  
+  // Wait for 1 second (1000 milliseconds)
+  delay(1000);
+}
